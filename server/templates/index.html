@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Control</title>
+    <link rel="stylesheet" href="static/styles.css"> <!-- 별도의 CSS 파일을 사용할 경우 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1 class = hd_style>RC Car Control Web</h1>
+    </header>
+
+    <main>
+        <h3>Button Control</h3>
+        <button id="button" data-value="0">MCU Mode</button>
+        <button id="button1" data-value="1">Line Tracing</button>
+        <button id="button2" data-value="2">Color Tracing</button>
+        <button id="button3" data-value="3">MCU Atmosphere</button>
+    </main>
+
+    <footer>
+        <script>
+            // 버튼 클릭 이벤트 처리
+            $('button').click(function() {
+                var buttonValue = $(this).data('value');
+                console.log("Button Clicked - Value:", buttonValue);
+
+                // Flask 웹 애플리케이션으로 버튼 값을 전송
+                $.ajax({
+                    url: '/send_data',
+                    type: 'POST',
+                    data: { button_value: buttonValue },
+                    success: function(data) {
+                        console.log("Data Sent:", data);
+                    },
+                    error: function(err) {
+                        console.error("Error Sending Data:", err);
+                    }
+                });
+            });
+        </script>
+    </footer>
+</body>
+</html>
